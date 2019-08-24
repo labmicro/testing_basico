@@ -62,6 +62,20 @@ void test_suma_normal(void) {
    TEST_ASSERT_EQUAL(0, acumular(&suma, 3));
    TEST_ASSERT_EQUAL(8, suma);
 }
+void test_suma_limite_superior(void) {
+   int suma;
+
+   suma = 0x7FFFFFFE;
+   TEST_ASSERT_EQUAL(1, acumular(&suma, 3));
+   TEST_ASSERT_EQUAL(0x7FFFFFFF, suma);
+}
+void test_suma_limite_inferior(void) {
+   int suma;
+
+   suma = 0x80000001;
+   TEST_ASSERT_EQUAL(-1, acumular(&suma, -3));
+   TEST_ASSERT_EQUAL((signed int)0x80000000, suma);
+}
 /* === Ciere de documentacion ================================================================== */
 
 /** @} Final de la definición del modulo para doxygen */
