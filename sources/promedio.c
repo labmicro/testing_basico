@@ -59,7 +59,7 @@
 int promediar(const int valores[], int cantidad, int * promedio) {
    int resultado;
    int indice;
-   int acumulado;
+   int acumulado = 0;
 
    for (indice = 0; indice < cantidad; indice++) {
       resultado = acumular(&acumulado, valores[indice]);

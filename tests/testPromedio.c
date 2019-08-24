@@ -69,6 +69,22 @@ void test_promedio_normal(void) {
    TEST_ASSERT_EQUAL(2, resultado);
 }
 
+void test_promedio_error_inferior(void) {
+   int datos[] = {1, 2, 3};
+   int resultado;
+
+   acumular_fake.return_val = -1;
+   TEST_ASSERT_EQUAL(-1, promediar(datos, 3, &resultado));
+}
+
+void test_promedio_error_superior(void) {
+   int datos[] = {1, 2, 3};
+   int resultado;
+
+   acumular_fake.return_val = -1;
+   TEST_ASSERT_EQUAL(-1, promediar(datos, 3, &resultado));
+}
+
 /* === Ciere de documentacion ================================================================== */
 
 /** @} Final de la definición del modulo para doxygen */
