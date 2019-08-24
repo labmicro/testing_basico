@@ -66,7 +66,7 @@ int acumular(int * acumulado, int operando) {
       resultado = 1;
    } else if ((*acumulado < 0) && (operando < 0) && (suma > 0)) {
       *acumulado = 0x80000000;
-      resultado = 0;
+      resultado = -1;
    } else {
       *acumulado = suma;
       resultado = 0;
