@@ -74,7 +74,6 @@
   :enabled:
     - stdout_pretty_tests_report
     - gcov
-    - fake_function_framework
 
     #- stdout_ide_tests_report
 ...

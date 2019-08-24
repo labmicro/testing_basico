@@ -62,9 +62,15 @@ int auxiliar_acumular(int * acumulado, int operando) {
 /* === Definiciones de funciones externas ====================================================== */
 void test_promedio_normal(void) {
    int datos[] = {1, 2, 3};
+   int parciales[] = {0, 1, 3, 6};
    int resultado;
 
-   acumular_fake.custom_fake = auxiliar_acumular;
+   acumular_ExpectAndReturn(&parciales[0], 1, 0);
+   acumular_ReturnThruPtr_acumulado(&parciales[1]);
+   acumular_ExpectAndReturn(&parciales[1], 2, 0);
+   acumular_ReturnThruPtr_acumulado(&parciales[2]);
+   acumular_ExpectAndReturn(&parciales[2], 3, 0);
+   acumular_ReturnThruPtr_acumulado(&parciales[3]);
    TEST_ASSERT_EQUAL(0, promediar(datos, 3, &resultado));
    TEST_ASSERT_EQUAL(2, resultado);
 }
@@ -73,7 +79,7 @@ void test_promedio_error_inferior(void) {
    int datos[] = {1, 2, 3};
    int resultado;
 
-   acumular_fake.return_val = -1;
+   acumular_IgnoreAndReturn(-1);
    TEST_ASSERT_EQUAL(-1, promediar(datos, 3, &resultado));
 }
 
@@ -81,8 +87,8 @@ void test_promedio_error_superior(void) {
    int datos[] = {1, 2, 3};
    int resultado;
 
-   acumular_fake.return_val = -1;
-   TEST_ASSERT_EQUAL(-1, promediar(datos, 3, &resultado));
+   acumular_IgnoreAndReturn(1);
+   TEST_ASSERT_EQUAL(1, promediar(datos, 3, &resultado));
 }
 
 /* === Ciere de documentacion ================================================================== */
