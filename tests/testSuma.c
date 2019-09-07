@@ -73,13 +73,15 @@ ejemplo_t EJEMPLOS[] = {
 
 /* === Definiciones de funciones externas ====================================================== */
 void test_suma_saturada(void) {
+   char mensaje[32];
 
    for (int indice = 0; indice < cantidad(EJEMPLOS, ejemplo_t); indice++) {
       ejemplo_t * ejemplo = &EJEMPLOS[indice];
+      sprintf(mensaje, "Ejemplo %d", indice);
       
       int suma = ejemplo->inicial;
-      TEST_ASSERT_EQUAL(ejemplo->resultado, acumular(&suma, ejemplo->operando));
-      TEST_ASSERT_EQUAL(ejemplo->acumulado, suma);
+      TEST_ASSERT_EQUAL_MESSAGE(ejemplo->resultado, acumular(&suma, ejemplo->operando), mensaje);
+      TEST_ASSERT_EQUAL_MESSAGE(ejemplo->acumulado, suma, mensaje);
    }
 }
 /* === Ciere de documentacion ================================================================== */
