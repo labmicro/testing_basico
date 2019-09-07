@@ -43,38 +43,44 @@
 /* === Inclusiones de cabeceras ================================================================ */
 #include "unity.h"
 #include "suma.h"
+#include <stdio.h>
 
 /* === Definicion y Macros ===================================================================== */
+#define cantidad(variable, tipo) (sizeof(variable) / sizeof(tipo))
 
 /* === Declaraciones de tipos de datos internos ================================================ */
+typedef struct {
+   int inicial;
+   int operando;
+   int resultado;
+   int acumulado;
+} ejemplo_t;
 
 /* === Declaraciones de funciones internas ===================================================== */
 
-/* === Definiciones de variables externas ====================================================== */
+/* === Definiciones de variables internas ====================================================== */
+ejemplo_t EJEMPLOS[] = {
+   {
+      .inicial = 5, .operando = 3, .resultado = 0, .acumulado = 8,
+   },{
+      .inicial = 0x7FFFFFFE, .operando = 3, .resultado = 1, .acumulado = 0x7FFFFFFF,
+   },{
+      .inicial = 0x80000001, .operando = -3, .resultado = 1, .acumulado = 0x80000000,
+   }
+};
 
 /* === Definiciones de funciones internas =====================================================- */
 
 /* === Definiciones de funciones externas ====================================================== */
-void test_suma_normal(void) {
-   int suma;
+void test_suma_saturada(void) {
 
-   suma = 5;
-   TEST_ASSERT_EQUAL(0, acumular(&suma, 3));
-   TEST_ASSERT_EQUAL(8, suma);
-}
-void test_suma_limite_superior(void) {
-   int suma;
-
-   suma = 0x7FFFFFFE;
-   TEST_ASSERT_EQUAL(1, acumular(&suma, 3));
-   TEST_ASSERT_EQUAL(0x7FFFFFFF, suma);
-}
-void test_suma_limite_inferior(void) {
-   int suma;
-
-   suma = 0x80000001;
-   TEST_ASSERT_EQUAL(-1, acumular(&suma, -3));
-   TEST_ASSERT_EQUAL((signed int)0x80000000, suma);
+   for (int indice = 0; indice < cantidad(EJEMPLOS, ejemplo_t); indice++) {
+      ejemplo_t * ejemplo = &EJEMPLOS[indice];
+      
+      int suma = ejemplo->inicial;
+      TEST_ASSERT_EQUAL(ejemplo->resultado, acumular(&suma, ejemplo->operando));
+      TEST_ASSERT_EQUAL(ejemplo->acumulado, suma);
+   }
 }
 /* === Ciere de documentacion ================================================================== */
 
